@@ -15,10 +15,10 @@
   <ul>
     {% for router in routers %}
     <li>
-      {{ router.ip }} - {{ router.username }}
+      <a href="/router/{{ router.ip }}" style="margin-left:8px;">{{ router.ip }}</a> - {{ router.username }}
       <form action="/delete/{{ router._id }}" method="post" style="display:inline;">
         <button type="submit">Delete</button>
-      </form>
+     </form>
     </li>
     {% endfor %}
   </ul>
