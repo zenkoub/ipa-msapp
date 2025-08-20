@@ -14,6 +14,7 @@ db = client[db_name]
 routers = db["routers"]
 interface_status = db["interface_status"]
 
+
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html", routers=list(routers.find()))
@@ -49,7 +50,7 @@ def router_detail(ip):
     )
 
     return render_template(
-            "router_detail.html",
+        "router_detail.html",
         router_ip=ip,
         interface_data=docs,
     )
