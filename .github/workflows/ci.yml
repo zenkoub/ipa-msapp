@@ -9,45 +9,45 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v4
 
-    - name: Set up Python 3.12.3
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.12.3
+      - name: Set up Python 3.12.3
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12.3
 
-    - name: Install Lint & Format Tools
-      run: |
-        pip install flake8 black
+      - name: Install Lint & Format Tools
+        run: |
+          pip install flake8 black
 
-    - name: Run flake8 (Lint)
-      run: flake8 .
+      - name: Run flake8 (Lint)
+        run: flake8 .
 
-    - name: Check code format with black
-      run: black --check .
+      - name: Check code format with black
+        run: black --check .
 
-    - name: Check Docker Versions
-      run: |
-        docker --version
-        docker compose version
+      - name: Check Docker Versions
+        run: |
+          docker --version
+          docker compose version
 
-    - name: Login to Docker Hub
-      if: success()
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build & Push Docker Images
-      if: success()
-      run: |
-        docker build -t chotipatp/worker:latest ./worker
-        docker build -t chotipatp/scheduler:latest ./scheduler
-        docker build -t chotipatp/web:latest ./web
+      - name: Build & Push Docker Images
+        run: |
+          docker build -t ${DOCKERHUB_USERNAME}/worker:latest ./worker
+          docker build -t ${DOCKERHUB_USERNAME}/scheduler:latest ./scheduler
+          docker build -t ${DOCKERHUB_USERNAME}/web:latest ./web
 
-        docker push chotipatp/worker:latest
-        docker push chotipatp/scheduler:latest
-        docker push chotipatp/web:latest
+          docker push ${DOCKERHUB_USERNAME}/worker:latest
+          docker push ${DOCKERHUB_USERNAME}/scheduler:latest
+          docker push ${DOCKERHUB_USERNAME}/web:latest
