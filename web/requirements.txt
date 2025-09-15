@@ -1,2 +1,5 @@
-flask
 pymongo
+pika
+python-dotenv
+ntc-templates
+textfsm
