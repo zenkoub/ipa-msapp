@@ -1,2 +1,5 @@
-pymongo
+flask
 pika
+pymongo
+paramiko
+textfsm
