@@ -16,14 +16,11 @@ interface_status = db["interface_status"]
 
 
 @app.route("/", methods=["GET"])
-
-
 def index():
     return render_template("index.html", routers=list(routers.find()))
 
+
 @app.route("/add", methods=["POST"])
-
-
 def add_router():
     ip = request.form.get("ip")
     username = request.form.get("username")
