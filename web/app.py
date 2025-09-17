@@ -6,8 +6,8 @@ from bson import ObjectId
 
 app = Flask(__name__)
 
-mongo_uri  = os.environ.get("MONGO_URI")
-db_name    = os.environ.get("DB_NAME")
+mongo_uri = os.environ.get("MONGO_URI")
+db_name = os.environ.get("DB_NAME")
 
 client = MongoClient(mongo_uri)
 db = client[db_name]
@@ -16,10 +16,14 @@ interface_status = db["interface_status"]
 
 
 @app.route("/", methods=["GET"])
+
+
 def index():
     return render_template("index.html", routers=list(routers.find()))
 
 @app.route("/add", methods=["POST"])
+
+
 def add_router():
     ip = request.form.get("ip")
     username = request.form.get("username")

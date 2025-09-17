@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def produce(host, body):
 
     rabbitmq_user = os.getenv("RABBITMQ_DEFAULT_USER")
@@ -24,6 +25,7 @@ def produce(host, body):
     print(f" [x] Sent: {body}")
 
     connection.close()
+
 
 if __name__ == "__main__":
     produce("localhost", "192.168.1.44")
